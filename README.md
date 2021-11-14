@@ -5,6 +5,8 @@ e responder de forma apropriada a essas requisições.
 
 Comandos implementados: GET, PUT, POST e DELETE.
 
+
+
 #
 
 ### Integrantes:
@@ -27,4 +29,25 @@ Comandos implementados: GET, PUT, POST e DELETE.
 [ ... ]
 
 ## DELETE 
----
+*S.O utilizado em teste: Ubuntu 18.04 LTS*
+ 
+ ### Entre na pasta do projeto
+ ```
+ cd ProjetoHttp-CE5320
+ ```
+ 
+ ### Inicie o servidor
+ ```
+ python3 servidorHTTP.py
+ ```
+ 
+ ### Abra outro terminal e inicie a conexão
+ ```
+ telnet localhost 8080
+ ```
+ 
+ ### Comando DELETE
+ ```
+ DELETE /testessss.html 
+ ```
+ 
