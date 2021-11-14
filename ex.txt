@@ -1,4 +1,4 @@
-PUT /teste.html HTTP/1.1
+POST /testessss.html HTTP/1.1
 Host: example.com
 Content-type: text/html
 Content-length: 16
