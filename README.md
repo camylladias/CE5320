@@ -35,19 +35,22 @@ Comandos implementados: GET, PUT, POST e DELETE.
  ```
  cd ProjetoHttp-CE5320
  ```
+ ![cd-projeto](https://user-images.githubusercontent.com/37374749/141695133-441a2ba3-ef9a-4dee-8f00-6c945e6e6061.PNG)
  
  ### Inicie o servidor
  ```
  python3 servidorHTTP.py
  ```
+ ![servidorhttp-py](https://user-images.githubusercontent.com/37374749/141694960-a7e27ca2-af48-4621-a78e-d40a8fc9baea.PNG)
  
  ### Abra outro terminal e inicie a conexão
  ```
  telnet localhost 8080
  ```
- 
+ ![telnet](https://user-images.githubusercontent.com/37374749/141695163-42129e30-d6dc-46d6-8be6-ab82ec3abb4a.PNG)
+
  ### Comando DELETE
  ```
  DELETE /testessss.html 
  ```
- 
+ ![delete](https://user-images.githubusercontent.com/37374749/141695166-ca3b89ad-c2e2-492c-8351-ee78e80cf330.PNG)
