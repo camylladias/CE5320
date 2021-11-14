@@ -67,22 +67,23 @@ def put(request):
             f.write(content)
 
         response = f'\nHTTP/1.1 201 Created\nContent-Location: /{file}\n'
+    except (IndexError, UnicodeDecodeError):
+        response = f'\nHTTP/1.1 400 Bad Request\n'
 
     return response
 
 def delete(request):
+    headers = request.split('\n')
+    file = headers[0].split()[1]
+
     dir_path = './htdocs'
-    file = '/projeto.html'
+    file_path = f'{dir_path}/{file}'
 
-    arquivos = os.listdir(dir_path)
-
-    if len(arquivos) == 0:
-        response = 'HTTP/1.1 404 NOT FOUND\n\nFile Not Found'
-
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        response = '\nHTTP/1.1 200 OK\n\n'
     else:
-        os.path.exists(dir_path/file)
-        os.remove(dir_path/file)
-        response = 'HTTP/1.1 200 OK\n\n'
+        response = '\nHTTP/1.1 404 NOT FOUND\n\nFile Not Found'
 
     return response
 
