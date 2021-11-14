@@ -35,12 +35,12 @@ def post(request):
     try:
         with open(f'./htdocs/%s'%file, 'a') as f:
             f.write(content)
-        response = 'OK'
+        response = f'\nHTTP/1.1 200 OK\nContent-Location: /{file}\n'
 
     except FileNotFoundError:
         with open(f'./htdocs/%s'%file, 'w') as f:
             f.write(content)
-            response = 'NOK'
+            response = f'\nHTTP/1.1 201 Created\nContent-Location: /{file}\n'
 
     return response
 
