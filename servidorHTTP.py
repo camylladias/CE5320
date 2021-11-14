@@ -2,27 +2,102 @@ import socket
 import os
 
 def get(request):
-    print(request)
+    headers = request.split('\n')
+    filename = headers[0].split()[1]
+
+    if filename == '/':
+        filename = 'projeto.html'
+
+    if '=' in filename:
+        index = filename.index("=") + 1
+        filename = filename[index:]
+
+    try:
+        fin = open('htdocs/' + filename)
+        content = fin.read()
+        fin.close()
+
+        response = 'HTTP/1.1 200 OK\n\n' + content
+
+    except (FileNotFoundError, OSError):
+        response = 'HTTP/1.1 404 NOT FOUND\n\nFile Not Found'
+
+    return response
 
 def post(request):
-    print(request)
+    requestlist = request.split(' ')
+   
+    newlist = []
+    trdlist = []
+
+    for item in requestlist:
+        item = item.split('\\n')
+        print(item)
+        newlist.append(item)
+        
+
+    header = newlist[1]
+    print("header")
+    print(header)
+    file = header[0].split('?')[0].split('/')[1]
+  
+        
+    try:  
+        
+        file = open(f'./htdocs/%s.html'%file, 'w') 
+        file.write('TESTE')
+        file.close()
+        response = 'OK'
+        
+
+    except FileNotFoundError:
+        with open(f'./htdocs/%s'%filename, 'w') as f:
+            f.write('TESTE')
+            response = 'NOK'
+    
+    return request
 
 def put(request):
-    file = request.split(' ')[1]
-    
-    if '/' in file:
-        file = file[1:]
+    requestlist = request.split('\r\n')
 
-    isFile = os.path.isfile('./htdocs/%s' %(file))
+    header = requestlist[0].split(' ')
+    file = header[1][1:]
 
-    if (isFile):
-        return 'updated'
-    else:
-        return 'not existing file'
+    content = requestlist[5]
+
+    try:
+        with open(f'./htdocs/{file}') as f: 
+            actual_content = f.read()
+
+        if content == actual_content:
+            response = f'\nHTTP/1.1 204 No Content\nContent-Location: /{file}\n'
+        else:
+            with open(f'./htdocs/{file}', 'w') as f:
+                f.write(content) 
+                response = f'\nHTTP/1.1 200 OK\nContent-Location: /{file}\n'
+    except (FileNotFoundError, OSError):
+        with open(f'./htdocs/{file}', 'w') as f:
+            f.write(content)
+
+        response = f'\nHTTP/1.1 201 Created\nContent-Location: /{file}\n'
+
+    return response
 
 def delete(request):
-    return 'delete'
+    dir_path = './htdocs'
+    file = '/projeto.html'
 
+    arquivos = os.listdir(dir_path)
+
+    if len(arquivos) == 0:
+        response = 'HTTP/1.1 404 NOT FOUND\n\nFile Not Found'
+
+    else:
+        os.path.exists(dir_path/file)
+        os.remove(dir_path/file)
+        response = 'HTTP/1.1 200 OK\n\n'
+
+    return response
 
 SERVER_HOST = ""
 SERVER_PORT = 8080
@@ -40,25 +115,23 @@ print("Escutando por conexoes na porta %s" % SERVER_PORT)
 
 while True:
     client_connection, client_address = server_socket.accept()
+    request = ''
 
-    request = client_connection.recv(1024).decode()
+    for _ in range(6):
+        request += client_connection.recv(1024).decode()
+        method = request.split("\n")[0].split(" ")[0]
 
-    if request:
-        headers = request.split("\n")
-        method = headers[0].split(" ")[0]
+        if method in ['GET', 'DELETE']:
+            break
 
-        if method == 'GET':
-            response = get(request)
-        elif method == 'POST':
-            response = post(request)
-        elif method == 'PUT':
-            response = put(request)
-            print(response)
-        else:
-            response = delete(request)
-
-        #client_connection.sendall(response.encode())
-
-        #client_connection.close()
+    if method == 'GET':
+        response = get(request)
+    elif method == 'POST':
+        response = post(request)
+    elif method == 'PUT':
+        response = put(request)
     else:
-        client_connection.close()
+        response = delete(request)
+
+    client_connection.sendall(response.encode())
+    client_connection.close()
