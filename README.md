@@ -54,3 +54,10 @@ Comandos implementados: GET, PUT, POST e DELETE.
  DELETE /testessss.html 
  ```
  ![delete](https://user-images.githubusercontent.com/37374749/141695166-ca3b89ad-c2e2-492c-8351-ee78e80cf330.PNG)
+ 
+  ### Comando DELETE (teste quando arquivo não existe)
+ ```
+ DELETE /testessss.html 
+ ```
+ ![delete-teste-404](https://user-images.githubusercontent.com/37374749/141695462-21889a93-eb37-472c-b8de-3ca4192a4223.PNG)
+
