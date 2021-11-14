@@ -25,24 +25,30 @@ def get(request):
     return response
 
 def post(request):
+    dir_path = './htdocs'
+    
+    
     requestlist = request.split('\r\n')
 
     header = requestlist[0].split(' ')
     file = header[1][1:]
+    file_path = f'{dir_path}/{file}'
 
     content = requestlist[5]
 
-    try:
-        with open(f'./htdocs/%s'%file, 'a') as f:
+    if os.path.exists(file_path):
+        with open('./htdocs/%s'%file, 'a') as f:
             f.write(content)
         response = f'\nHTTP/1.1 200 OK\nContent-Location: /{file}\n'
-
-    except FileNotFoundError:
-        with open(f'./htdocs/%s'%file, 'w') as f:
+            
+    else:
+        with open('./htdocs/%s'%file, 'w') as f:
             f.write(content)
-            response = f'\nHTTP/1.1 201 Created\nContent-Location: /{file}\n'
+        response = f'\nHTTP/1.1 201 CREATED\nContent-Location: /{file}\n'
+            
 
     return response
+
 
 def put(request):
     requestlist = request.split('\r\n')
