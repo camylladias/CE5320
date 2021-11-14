@@ -25,37 +25,24 @@ def get(request):
     return response
 
 def post(request):
-    requestlist = request.split(' ')
-   
-    newlist = []
-    trdlist = []
+    requestlist = request.split('\r\n')
 
-    for item in requestlist:
-        item = item.split('\\n')
-        print(item)
-        newlist.append(item)
-        
+    header = requestlist[0].split(' ')
+    file = header[1][1:]
 
-    header = newlist[1]
-    print("header")
-    print(header)
-    file = header[0].split('?')[0].split('/')[1]
-  
-        
-    try:  
-        
-        file = open(f'./htdocs/%s.html'%file, 'w') 
-        file.write('TESTE')
-        file.close()
+    content = requestlist[5]
+
+    try:
+        with open(f'./htdocs/%s'%file, 'a') as f:
+            f.write(content)
         response = 'OK'
-        
 
     except FileNotFoundError:
-        with open(f'./htdocs/%s'%filename, 'w') as f:
-            f.write('TESTE')
+        with open(f'./htdocs/%s'%file, 'w') as f:
+            f.write(content)
             response = 'NOK'
-    
-    return request
+
+    return response
 
 def put(request):
     requestlist = request.split('\r\n')
