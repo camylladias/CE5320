@@ -2,12 +2,69 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Projeto de Redes</title>
-	</head>
-	<body>
-		<h3>Bem Vindo ao Nosso Projeto de Redes</h3>
+		<title>Projeto Servidor HTTP/1.1</title>
+		<style>
+			body{
+				font-family:Arial, Helvetica, sans-serif;
+			}
+			#methods1{
+				background-color:whitesmoke;
+				border-left: 2px solid #3C99DC;
+				border-right: 2px solid #3C99DC;
+				color: black;
+				height: 50%;
+				width: auto;
+				padding-left: 25%;
+				padding-top: 2%;
+			}
 
-		<div>
+			#methods2{
+				background-color:whitesmoke;
+				border-left: 2px solid #3C99DC;
+				border-right: 2px solid #3C99DC;
+				border-bottom: 2px solid #3C99DC;
+				color: black;
+				height: 50%;
+				width: auto;
+				padding-left: 25%;
+				padding-top: 10px;
+				padding-bottom: 100px;
+			}
+
+			input[type=text] {
+  				border: 2px solid #3C99DC;
+  				border-radius: 4px;
+			}
+
+			button{
+				background-color: #3C99DC;
+				color: white;
+				font-weight: bold;
+				margin-left: 5px;
+				border-style: none;
+				width: 90px;
+				height: 22px;
+				opacity: 0.8;
+				transition: 0.2s;
+			}
+
+			#btn:hover {opacity: 2}
+
+			#h2{
+				background-color: black;
+				color: white;
+				height: 50px;
+				padding-top: 1%;
+				padding-bottom: 2%;
+				margin-top: -10px;
+			}
+		</style>
+	</head>
+
+	<body id="body">
+		<div id=h2><h2><center>Projeto Servidor HTTP/1.1 - Disciplina CE5320 (FEI)</center></h2></div>
+
+		<div id="methods1" >
 			<div>
 				<div>
 					<p>GET</p>
@@ -15,10 +72,8 @@
 						<div>
 							<div>
 								<label for="file">Nome do arquivo: </label>
-								<input type="text" id="file" name=""/>
-							</div>
-							<div>
-								<button type="submit">Recuperar arquivo</button>
+								<input type="text" id="file" name="file"/>
+								<button id="btn" type="submit">Recuperar</button>
 							</div>
 						</div>
 					</form>
@@ -33,38 +88,12 @@
 					>
 						<div>
 							<div>
-								<label for="file">Selecione o arquivo: </label><br>
-								<input type="file" id="file" name="file" />
-							</div>
-							<div>
-								<button type="submit">Enviar arquivo</button>
+								<label for="file">Selecione o arquivo: </label>
+								<input type="file" id="file2" name="file" /><button id="btn" type="submit">Enviar</button>
 							</div>
 						</div>
 					</form>
 					<br /><br /><br />
-				</div>
-				<div>
-					<p>PUT</p>
-					<form
-						method="put"
-						action="http://localhost:8080"
-						enctype="multipart/form-data"
-					>
-						<div>
-							<label for="file">Choose a file</label>
-							<input type="file" id="file" name="myFile" />
-						</div>
-						<div>
-							<button>Send the file</button>
-						</div>
-					</form>
-					<br /><br /><br />
-				</div>
-				<div>
-					<p>DELETE</p>
-					<form method="delete" action="http://localhost:8080">
-						<button type="submit">Clique aqui para DELETE</button>
-					</form>
 				</div>
 			</div>
 		</div>

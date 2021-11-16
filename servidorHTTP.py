@@ -26,26 +26,31 @@ def get(request):
 
 def post(request):
     dir_path = './htdocs'
-    
-    
+
     requestlist = request.split('\r\n')
 
     header = requestlist[0].split(' ')
+
     file = header[1][1:]
     file_path = f'{dir_path}/{file}'
+
+    if header[1] == '/':
+        filelist = requestlist[21].split(' ')[3]
+
+        index = filelist.index("=") + 1
+        file = filelist[index:][1:-1]
 
     content = requestlist[5]
 
     if os.path.exists(file_path):
-        with open('./htdocs/%s'%file, 'a') as f:
+        with open(f'./htdocs/{file}', 'a') as f:
             f.write(content)
         response = f'\nHTTP/1.1 200 OK\nContent-Location: /{file}\n'
-            
+
     else:
-        with open('./htdocs/%s'%file, 'w') as f:
+        with open(f'./htdocs/{file}', 'w') as f:
             f.write(content)
         response = f'\nHTTP/1.1 201 CREATED\nContent-Location: /{file}\n'
-            
 
     return response
 
@@ -111,8 +116,9 @@ while True:
     client_connection, client_address = server_socket.accept()
     request = ''
 
-    for _ in range(6):
+    for i in range(6):
         request += client_connection.recv(1024).decode()
+        
         method = request.split("\n")[0].split(" ")[0]
 
         if method in ['GET', 'DELETE']:
