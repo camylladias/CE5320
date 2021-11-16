@@ -34,12 +34,6 @@ def post(request):
     file = header[1][1:]
     file_path = f'{dir_path}/{file}'
 
-    if header[1] == '/':
-        filelist = requestlist[21].split(' ')[3]
-
-        index = filelist.index("=") + 1
-        file = filelist[index:][1:-1]
-
     content = requestlist[5]
 
     if os.path.exists(file_path):
